@@ -1,0 +1,9 @@
+syntax="protoc3";
+
+option java_outer_classname="UserAuthenticationNotice";
+
+message UserAuthenticationMessage{
+
+
+
+}

@@ -1,0 +1,27 @@
+syntax="proto3";
+//需要导入any.proto文件才可实现泛型
+import "google/protobuf/any.proto";
+option optimize_for=SPEED;
+option java_outer_classname="TransportMessageOuterClass";//定义传输对象
+
+
+enum MessageType{
+  //0代表序列号
+  UserAuthenticationNotice=0;
+  //用户强制下线通知
+  UserForceOffLineNotice=1;
+  //用户登录过期通知
+  UserTokenExpireNotice=2;
+}
+
+
+message TransportMessage{
+
+  int64 messageId=1;
+
+  MessageType messageType=2;
+
+  google.protobuf.Any messageBody=3;
+
+}
+

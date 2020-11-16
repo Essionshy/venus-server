@@ -1,0 +1,19 @@
+server:
+  port: 9001
+  servlet:
+    context-path: /venus
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root-xz
+    url: jdbc:mysql://192.168.0.105:3306/venus?serverTimezone=UTC&useSSL=false
+  thymeleaf:
+    prefix: classpath:templates/views/
+    suffix: .html
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
