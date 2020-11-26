@@ -1,7 +1,9 @@
 package com.tingyu.venus.netty.websocket.handler.impl;
 
 import com.tingyu.venus.netty.protobuf.TransportMessageOuterClass;
+import com.tingyu.venus.netty.websocket.handler.MessageHandler;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,6 +13,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserAuthenticationMessageHandler extends AbstractJsonMessageHandler {
+
+    @Override
+    protected MessageHandler getHandlerInternal(TransportMessageOuterClass.MessageType messageType) {
+        if(messageType.equals(TransportMessageOuterClass.MessageType.UserAuthenticationNotice)){
+            return this;
+        }else {
+            return super.handler.getHandler(messageType);
+        }
+    }
 
     /**
      *
@@ -22,6 +33,11 @@ public class UserAuthenticationMessageHandler extends AbstractJsonMessageHandler
     protected void handleInternal(ChannelHandlerContext ctx, TransportMessageOuterClass.TransportMessage msg, String contentJsonStr) {
         //TODO 处理用户认证
 
+        //TODO 测试是否可以通过websocket channel 发送消息给socket 客户端
+        TransportMessageOuterClass.TransportMessage transportMessage = TransportMessageOuterClass.TransportMessage.newBuilder()
+                .setMessageType(TransportMessageOuterClass.MessageType.USER_ONLINE_NOTICE).setMessageId(10111).build();
+
+        ctx.writeAndFlush(new TextWebSocketFrame("你是个哈逼吗"));
 
 
 

@@ -1,0 +1,13 @@
+syntax="proto3";
+
+option optimize_for=SPEED;
+option java_outer_classname="ContactDeleteNotice";
+option java_package="com.tingyu.venus.netty.protobuf";
+
+
+message ContactDeleteNoticeMessage{
+
+  string from=1;
+  string to=2;
+
+}

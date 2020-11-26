@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+option optimize_for = SPEED;
+
+option java_package = "com.tingyu.venus.netty.protobuf";
+
+option java_outer_classname = "GroupChatCreateNotice";
+
+message GroupChatCreateNoticeMessage{
+
+  int64 id = 1; //消息ID
+
+  string groupId = 2; //群ID
+
+  string groupName = 3; //群名称
+
+  string createId = 4; //群主ID
+
+  string memberIds = 5; //多个群成员用逗号分隔
+
+  string notice = 6;// 群公告
+
+  string remark = 7;//群备注
+
+}

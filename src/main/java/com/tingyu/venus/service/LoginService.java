@@ -3,6 +3,8 @@ package com.tingyu.venus.service;
 import com.tingyu.venus.form.LoginForm;
 import com.tingyu.venus.form.RegisterForm;
 
+import java.util.Map;
+
 /**
  * @Author essionshy
  * @Create 2020/11/10 22:06
@@ -16,9 +18,9 @@ public interface LoginService {
      * @param password
      * @return
      */
-    String login(String username,String password);
+    Map<String,Object> login(String username,String password);
 
-    String login(LoginForm loginForm);
+    Map<String,Object> login(LoginForm loginForm);
 
     boolean register(RegisterForm registerForm);
 }

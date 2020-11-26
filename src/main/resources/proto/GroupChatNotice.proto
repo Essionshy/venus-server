@@ -1,0 +1,21 @@
+syntax="proto3";
+
+option optimize_for=SPEED;
+
+option java_package="com.tingyu.venus.netty.protobuf";
+
+option java_outer_classname="GroupChatNotice";
+
+message GroupChatNoticeMessage{
+
+  int64 id=1;
+  string groupId=2;
+
+  string groupName=3;
+
+  string fromId=4;
+
+  string content=5;
+
+
+}

@@ -1,9 +1,13 @@
 package com.tingyu.venus.netty.websocket.handler.impl;
 
+import com.tingyu.venus.exception.ResultException;
 import com.tingyu.venus.netty.protobuf.TransportMessageOuterClass;
 import com.tingyu.venus.netty.websocket.handler.JsonMessageHandler;
 import com.tingyu.venus.netty.websocket.handler.MessageHandler;
 import io.netty.channel.ChannelHandlerContext;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author essionshy
@@ -14,6 +18,17 @@ public abstract class AbstractJsonMessageHandler implements JsonMessageHandler {
 
     protected MessageHandler handler;
 
+    private static List<TransportMessageOuterClass.MessageType> supportMessageTypes;
+
+
+    static {
+        supportMessageTypes=new ArrayList<>();
+        //TODO 将所有支持的消息类型添加到集合中
+        supportMessageTypes.add(TransportMessageOuterClass.MessageType.UserAuthenticationNotice);
+        supportMessageTypes.add(TransportMessageOuterClass.MessageType.USER_ONLINE_NOTICE);
+
+    }
+
     @Override
     public void nextMessageHandler(MessageHandler handler) {
 
@@ -22,11 +37,12 @@ public abstract class AbstractJsonMessageHandler implements JsonMessageHandler {
 
     @Override
     public MessageHandler getHandler(TransportMessageOuterClass.MessageType messageType) {
-        if(messageType.equals(TransportMessageOuterClass.MessageType.UserAuthenticationNotice)){
-            return new UserAuthenticationMessageHandler();
-        }else{
-            return   this.handler.getHandler(messageType);
+        //TODO 为了避免不支持的消息类型导致栈溢出，需要判断
+        if(!supportMessageTypes.contains(messageType)){
+            throw new ResultException(25001,"不支持该消息类型");
         }
+
+     return   this.getHandlerInternal(messageType);
     }
 
     @Override
@@ -34,5 +50,6 @@ public abstract class AbstractJsonMessageHandler implements JsonMessageHandler {
         handleInternal(ctx, (TransportMessageOuterClass.TransportMessage) param,contentJsonStr);
     }
 
+    protected abstract MessageHandler getHandlerInternal(TransportMessageOuterClass.MessageType messageType);
    protected abstract void handleInternal(ChannelHandlerContext ctx, TransportMessageOuterClass.TransportMessage msg,String contentJsonStr);
 }

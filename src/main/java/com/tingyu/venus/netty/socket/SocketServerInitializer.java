@@ -1,6 +1,7 @@
 package com.tingyu.venus.netty.socket;
 
 import com.tingyu.venus.netty.protobuf.TransportMessageOuterClass;
+import com.tingyu.venus.netty.socket.handler.StringServerHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -18,12 +19,17 @@ import org.springframework.stereotype.Component;
 public class SocketServerInitializer extends ChannelInitializer<SocketChannel> {
 
     @Autowired
-    DispatcherSocketHandler dispatcherSocketHandler;
+    SocketServerHandler socketServerHandler;
+    @Autowired
+    StringServerHandler handler;
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
         ChannelPipeline pipeline = ch.pipeline();
         pipeline.addLast("decoder",new ProtobufDecoder(TransportMessageOuterClass.TransportMessage.getDefaultInstance()))
+              //  .addLast("decoder",new ProtobufDecoder(UserAuthenticationNotice.UserAuthenticationMessage.getDefaultInstance()))
                 .addLast("encoder",new ProtobufEncoder())
-                .addLast(dispatcherSocketHandler);
+                .addLast(socketServerHandler);
+
+
     }
 }

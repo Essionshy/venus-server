@@ -23,7 +23,7 @@ import java.util.Date;
 public final class JwtUtils {
 
 
-    public static String create(Integer id,String username){
+    public static String create(Long id,String username){
 
         String token= Jwts.builder()
                 .setHeaderParam("typ","JWT")

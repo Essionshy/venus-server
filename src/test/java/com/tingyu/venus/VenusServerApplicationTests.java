@@ -1,8 +1,10 @@
 package com.tingyu.venus;
 
+import com.tingyu.venus.dao.ContactRepository;
 import com.tingyu.venus.test.mapper.CoreThreadPool;
 import com.tingyu.venus.utils.MD5Utils;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
@@ -63,6 +65,15 @@ class VenusServerApplicationTests {
 
 
         System.out.println("============="+(8<<1));
+    }
+
+    @Autowired
+    ContactRepository contactRepository;
+
+    @Test
+    public void testDeleteJPA(){
+        String from="18202823561";
+        String to="17318656979";
     }
 
 }

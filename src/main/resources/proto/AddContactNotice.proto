@@ -1,0 +1,34 @@
+syntax="proto3";
+
+option optimize_for=SPEED;
+
+option java_package="com.tingyu.venus.netty.protobuf";
+option java_outer_classname="ContactAddNotice";
+
+message ContactAddNoticeMessage{
+
+  string fromPhone=1; //发起方手机号
+
+  string fromName=2;//发起用户名
+
+  string fromAvatar=3;//发起方头像
+
+
+  string toPhone=4; //接收方方手机号
+
+  string toName=5;//接收方用户名
+
+  string toAvatar=6;//接收方方头像
+
+
+  string reason=7; //添加原因
+
+  InvitationStatus status=8; //邀请状态，新的邀请，邀请被接收，邀请被拒绝
+
+  enum InvitationStatus{
+    INVITE_NEW=0;
+    INVITE_ACCEPT=1;
+    INVITE_REJECT=2;
+  }
+
+}

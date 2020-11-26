@@ -1,8 +1,8 @@
 package com.tingyu.venus.service.impl;
 
-import com.tingyu.venus.dao.AreaDao;
-import com.tingyu.venus.dao.CityDao;
-import com.tingyu.venus.dao.ProvinceDao;
+import com.tingyu.venus.dao.AreaRepository;
+import com.tingyu.venus.dao.CityRepository;
+import com.tingyu.venus.dao.ProvinceRepository;
 import com.tingyu.venus.entity.Area;
 import com.tingyu.venus.entity.City;
 import com.tingyu.venus.entity.Province;
@@ -31,18 +31,18 @@ public class AddressServiceImpl implements AddressService {
 
 
     @Autowired
-    private ProvinceDao provinceDao;
+    private ProvinceRepository provinceRepository;
 
     @Autowired
-    private CityDao cityDao;
+    private CityRepository cityRepository;
 
     @Autowired
-    private AreaDao areaDao;
+    private AreaRepository areaRepository;
 
     @Override
     public List<ProvinceVo> listProvince() {
 
-        List<Province> provinces = provinceDao.findAll();
+        List<Province> provinces = provinceRepository.findAll();
 
         List<ProvinceVo> provinceVoList = provinces.stream().map(province -> {
             ProvinceVo provinceVo = new ProvinceVo();
@@ -60,7 +60,7 @@ public class AddressServiceImpl implements AddressService {
         City city = new City();
         city.setProvinceCode(provinceCode);
         Example<City> example = Example.of(city);
-        List<City> cityList = cityDao.findAll(example);
+        List<City> cityList = cityRepository.findAll(example);
 
         List<CityVo> cityVoList = cityList.stream().map(city1 -> {
             CityVo cityVo = new CityVo();
@@ -78,7 +78,7 @@ public class AddressServiceImpl implements AddressService {
         area.setCityCode(cityCode);
         Example<Area> ex = Example.of(area);
 
-        List<Area> areaList = areaDao.findAll(ex);
+        List<Area> areaList = areaRepository.findAll(ex);
 
         List<AreaVo> areaVoList = areaList.stream().map(area1 -> {
             AreaVo areaVo = new AreaVo();
@@ -94,7 +94,7 @@ public class AddressServiceImpl implements AddressService {
         City city = new City();
         city.setCityName(cityName);
         Example<City> example = Example.of(city);
-        Optional<City> one = cityDao.findOne(example);
+        Optional<City> one = cityRepository.findOne(example);
         try {
             City city1 = one.get();
             return this.listAreaByCityCode(city1.getCityCode());

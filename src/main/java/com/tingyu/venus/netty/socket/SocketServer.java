@@ -7,6 +7,7 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,9 +50,9 @@ public class SocketServer {
                 ServerBootstrap bootstrap=new ServerBootstrap();
                 bootstrap.group(bossGroup,workerGroup)
                         .channel(NioServerSocketChannel.class)
-                        .childOption(ChannelOption.SO_BACKLOG,128)
-                        .childOption(ChannelOption.SO_KEEPALIVE,true)
-                        .handler(new LoggingHandler())
+                        .option(ChannelOption.SO_BACKLOG,1024)
+                        .option(ChannelOption.SO_KEEPALIVE,true)
+                        .handler(new LoggingHandler(LogLevel.INFO))
                         .childHandler(socketServerInitializer);
                 ChannelFuture cf = bootstrap.bind(getPort()).sync();
                 Channel channel = cf.channel();

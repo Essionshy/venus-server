@@ -1,0 +1,64 @@
+syntax = "proto3";
+//需要导入any.proto文件才可实现泛型
+import "google/protobuf/any.proto";
+option optimize_for = SPEED;
+option java_outer_classname = "TransportMessageOuterClass";//定义传输对象
+option java_package = "com.tingyu.venus.netty.protobuf";
+
+enum MessageType{
+  //0代表序列号
+  UserAuthenticationNotice = 0;
+  //用户强制下线通知
+  UserForceOffLineNotice = 1;
+  //用户登录过期通知
+  UserTokenExpireNotice = 2;
+  //用户上线通知
+  USER_ONLINE_NOTICE = 3;
+  //用户下线通知
+  USER_OFFLINE_NOTICE = 4;
+
+  //聊天信息通知
+  CHAT_MSG_NOTICE = 5;
+
+  INVITATION_NOTICE = 6;
+
+  //消息被签收
+  MESSAGE_RECEIVED_ACK = 7;
+  //目标不在线
+  TARGET_NOT_ONLINE = 8;
+
+  //添加联系人通知
+  ADD_CONTACT_NOTICE = 9;
+
+  ADD_CONTACT_RECEIVED = 10;
+
+  ADD_CONTACT_REJECTED = 11;
+
+  //删除联系人通知
+  DELETE_CONTACT_NOTICE = 12;
+
+  //心跳检测通知
+  HEARTBEAT_NOTICE = 13;
+  CREATE_GROUP_CHAT_NOTICE = 14;
+
+  DELETE_GROUP_CHAT_NOTICE = 15;
+
+
+
+}
+
+
+message TransportMessage{
+
+  int64 messageId = 1;
+
+  MessageType messageType = 2;
+
+  google.protobuf.Any messageBody = 3;
+
+  string accessToken = 4;//访问token
+
+  sint64 refMessageId = 5; //针对特定的消息请求指定请求ID
+
+}
+

@@ -1,0 +1,12 @@
+syntax="proto3";
+
+option java_outer_classname="UserAuthenticationNotice";
+
+message UserAuthenticationMessage{
+
+  int32 userId=1;
+  string username=2;
+
+
+
+}

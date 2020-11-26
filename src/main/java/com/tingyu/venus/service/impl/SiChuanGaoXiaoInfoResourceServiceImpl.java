@@ -1,7 +1,7 @@
 package com.tingyu.venus.service.impl;
 
 import com.alibaba.excel.EasyExcel;
-import com.tingyu.venus.dao.SiChuanGaoXiaoInfoResourceDao;
+import com.tingyu.venus.dao.SiChuanGaoXiaoInfoResourceRepository;
 import com.tingyu.venus.entity.SiChuanGaoXiaoInfoResourceEntity;
 import com.tingyu.venus.excel.SiChuanGaoXiaoInformationResourceData;
 import com.tingyu.venus.exception.ResultException;
@@ -22,14 +22,14 @@ import java.io.IOException;
 public class SiChuanGaoXiaoInfoResourceServiceImpl implements SiChuanGaoXiaoInfoResourceService {
 
     @Autowired
-   private SiChuanGaoXiaoInfoResourceDao siChuanGaoXiaoInfoResourceDao;
+   private SiChuanGaoXiaoInfoResourceRepository siChuanGaoXiaoInfoResourceRepository;
 
     @Autowired
     private SiChuanGaoXiaoInfoResourceExcelListener siChuanGaoXiaoInfoResourceExcelListener;
 
     @Override
     public void save(SiChuanGaoXiaoInfoResourceEntity entity) {
-        siChuanGaoXiaoInfoResourceDao.save(entity);
+        siChuanGaoXiaoInfoResourceRepository.save(entity);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class SiChuanGaoXiaoInfoResourceServiceImpl implements SiChuanGaoXiaoInfo
     @Override
     public boolean remove() {
         try{
-            siChuanGaoXiaoInfoResourceDao.deleteAllInBatch();
+            siChuanGaoXiaoInfoResourceRepository.deleteAllInBatch();
             return true;
         }catch (Exception e){
             e.printStackTrace();

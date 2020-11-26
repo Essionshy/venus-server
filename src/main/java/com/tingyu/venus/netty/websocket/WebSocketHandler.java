@@ -1,6 +1,7 @@
 package com.tingyu.venus.netty.websocket;
 
 
+import com.tingyu.venus.netty.util.NettyChannelUtil;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -34,13 +35,17 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
         log.info("handlerAdded at {}", ctx.channel().id().asLongText());
         //  ctx.writeAndFlush(new TextWebSocketFrame("连接服务器成功..."));
+        //客户端断开连接，移除对应的通道
+
+
 
     }
 
     @Override
     public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
-        log.info("handlerAdded at {}", ctx.channel().id().asLongText());
-        //ctx.writeAndFlush(new TextWebSocketFrame("与服务器断开连接..."));
+        log.info("handlerRemoved at {}", ctx.channel().id().asLongText());
+        //
+        NettyChannelUtil.exit(ctx);
 
     }
 

@@ -12,6 +12,9 @@ import com.tingyu.venus.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @Author essionshy
  * @Create 2020/11/10 22:09
@@ -24,8 +27,9 @@ public class LoginServiceImpl implements LoginService {
     private UserService userService;
 
     @Override
-    public String login(String phone, String password) {
+    public  Map<String,Object> login(String phone, String password) {
 
+        Map<String,Object> map=new HashMap<>();
         UserVo user = userService.getByPhone(phone);
 
         //验证用户是否存在
@@ -41,11 +45,13 @@ public class LoginServiceImpl implements LoginService {
 
         //验证成功，根据用户手机号码生成token返回给客户端
         String token = JwtUtils.create(user.getId(),user.getUsername());
-        return token;
+        map.put("token",token);
+        map.put("user",user);
+        return map;
     }
 
     @Override
-    public String login(LoginForm loginForm) {
+    public Map<String,Object> login(LoginForm loginForm) {
         return this.login(loginForm.getPhone(), loginForm.getPassword());
     }
 

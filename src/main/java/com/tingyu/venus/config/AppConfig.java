@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.Arrays;
 
@@ -16,6 +17,7 @@ import java.util.Arrays;
  * @Create 2020/11/10 21:46
  * @Version venus-server
  */
+@EnableScheduling
 @EnableAspectJAutoProxy
 @Configuration
 @ComponentScan(value = "com.tingyu.venus")

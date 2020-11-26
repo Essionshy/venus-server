@@ -1,7 +1,7 @@
 package com.tingyu.venus.service.impl;
 
 import com.alibaba.excel.EasyExcel;
-import com.tingyu.venus.dao.SheBaoOutletsDao;
+import com.tingyu.venus.dao.SheBaoOutletsRepository;
 import com.tingyu.venus.entity.SheBaoServiceOutletsEntity;
 import com.tingyu.venus.excel.SbrsbmfwdData;
 import com.tingyu.venus.exception.ResultException;
@@ -27,14 +27,14 @@ public class SheBaoOutletsServiceImpl implements SheBaoOutletsService {
 
 
     @Autowired
-    private SheBaoOutletsDao sheBaoOutletsDao;
+    private SheBaoOutletsRepository sheBaoOutletsRepository;
 
     @Autowired
     private SheBaoOutletsExcelListener sheBaoOutletsExcelListener;
 
     @Override
     public void save(SheBaoServiceOutletsEntity entity) {
-        sheBaoOutletsDao.save(entity);
+        sheBaoOutletsRepository.save(entity);
 
     }
 
@@ -61,7 +61,7 @@ public class SheBaoOutletsServiceImpl implements SheBaoOutletsService {
     @Override
     public boolean remove() {
         try {
-            sheBaoOutletsDao.deleteAllInBatch();
+            sheBaoOutletsRepository.deleteAllInBatch();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -77,7 +77,7 @@ public class SheBaoOutletsServiceImpl implements SheBaoOutletsService {
         entity.setArea(areaName);
         Example<SheBaoServiceOutletsEntity> example = Example.of(entity);
 
-        List<SheBaoServiceOutletsEntity> outletsEntityList = sheBaoOutletsDao.findAll(example);
+        List<SheBaoServiceOutletsEntity> outletsEntityList = sheBaoOutletsRepository.findAll(example);
 
         List<SheBaoOutletsVo> list = outletsEntityList.stream().map(entity1 -> {
             SheBaoOutletsVo sheBaoOutletsVo = new SheBaoOutletsVo();

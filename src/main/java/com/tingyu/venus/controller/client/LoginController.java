@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 /**
  *
  * 通过手机app每天写入数据，由PC端进行数据的处理，分析，生成报表，导出excel
@@ -31,9 +33,8 @@ public class LoginController {
     @PostMapping(value = "/login")
     public CommonResult login(LoginForm loginForm){
 
-        String token = loginService.login(loginForm);
-        log.info("token",token);
-        return CommonResult.ok().data("token",token);
+        Map<String,Object> map = loginService.login(loginForm);
+        return CommonResult.ok().data(map);
 
     }
 

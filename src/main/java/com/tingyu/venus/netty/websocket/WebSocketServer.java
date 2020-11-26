@@ -8,6 +8,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
+import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +44,7 @@ public class WebSocketServer {
             try {
                 ServerBootstrap serverBootstrap = new ServerBootstrap();
                 serverBootstrap.group(bossGroup, workerGroup)
-                        .handler(new LoggingHandler())
+                        .handler(new LoggingHandler(LogLevel.INFO))
                         .channel(NioServerSocketChannel.class)
                         .option(ChannelOption.SO_KEEPALIVE,true)
                         .childHandler(new ChannelInitializer<SocketChannel>() {
@@ -56,7 +57,7 @@ public class WebSocketServer {
                                 pipeline.addLast(new ChunkedWriteHandler());
                                 //netty是基于分段请求的，HttpObjectAggregator的作用是将请求分段再聚合,参数是聚合字节的最大长度
                                 pipeline.addLast(new HttpObjectAggregator(65536))
-                                        .addLast(new WebSocketServerProtocolHandler("/ws/msg"))
+                                        .addLast(new WebSocketServerProtocolHandler("/ws"))
                                         .addLast(webSocketHandler);
                             }
                         });

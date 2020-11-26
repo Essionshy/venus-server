@@ -1,7 +1,9 @@
 package com.tingyu.venus.netty.websocket.handler.impl;
 
+import com.tingyu.venus.netty.protobuf.TransportMessageOuterClass;
+import com.tingyu.venus.netty.util.Constant;
+import com.tingyu.venus.netty.util.MessageUtil;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +22,9 @@ public class TextMessageHandler extends AbstractTextMessageHandler {
         log.info("接收到客户端消息，文本类型，文本内容：{}",text);
         //TODO 处理文本消息逻辑
 
+        if(text.equals(Constant.HEARTBEAT_NOTICE)){
+            MessageUtil.sendWebSocketMsg(ctx, TransportMessageOuterClass.MessageType.HEARTBEAT_NOTICE,null,null,null);
+        }
 
-        ctx.writeAndFlush(new TextWebSocketFrame(text));
     }
 }

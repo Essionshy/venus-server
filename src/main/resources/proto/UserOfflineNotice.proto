@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option optimize_for = SPEED;
+option java_outer_classname = "UserOfflineNotice";
+option java_package = "com.tingyu.venus.netty.protobuf";
+
+message UserOfflineNoticeMessage{
+
+  int32 id = 1;
+  string username = 2;
+  string userPhone = 3;
+
+  Reason reason = 4;
+
+  enum Reason{
+    LOGIN_OUT = 0; //退出登录
+
+    NET_BREAK = 1;//网络中断
+
+    DEV_ERROR = 2;//设备故障
+
+
+  }
+
+
+}

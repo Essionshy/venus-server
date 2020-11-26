@@ -21,6 +21,8 @@ public class CommonResult implements Serializable {
 
     private String message;
 
+    private Boolean success;
+
     private Map<String,Object> data=new HashMap<>();
 
 
@@ -34,11 +36,11 @@ public class CommonResult implements Serializable {
 
     public static CommonResult ok(){
 
-        return new CommonResult().setCode(2000).setMessage("Success");
+        return new CommonResult().setSuccess(true).setCode(2000).setMessage("Success");
     }
 
     public static CommonResult error(){
-        return new CommonResult().setCode(500).setMessage("Error");
+        return new CommonResult().setSuccess(false).setCode(500).setMessage("Error");
     }
 
 

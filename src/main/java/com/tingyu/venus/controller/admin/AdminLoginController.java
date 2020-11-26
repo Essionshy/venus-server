@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * @Author essionshy
@@ -29,9 +30,8 @@ public class AdminLoginController {
     @PostMapping(value = "/login")
     public CommonResult login(LoginForm loginForm, HttpServletRequest request){
         log.info("登录请求 {}",loginForm);
-        String token = loginService.login(loginForm);
-        request.setAttribute("token",token);
-        return CommonResult.ok().data("token",token);
+        Map<String,Object> map = loginService.login(loginForm);
+        return CommonResult.ok().data(map);
 
     }
 

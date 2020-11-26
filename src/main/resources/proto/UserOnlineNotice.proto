@@ -1,0 +1,11 @@
+syntax="proto3";
+
+option java_outer_classname="UserOnlineNotice";
+
+message UserOnlineNoticeMessage{
+
+  string userPhone=1;
+
+
+
+}

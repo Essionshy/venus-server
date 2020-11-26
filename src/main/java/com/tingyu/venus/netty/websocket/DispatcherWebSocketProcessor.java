@@ -1,7 +1,6 @@
 package com.tingyu.venus.netty.websocket;
 
 import com.alibaba.fastjson.JSONObject;
-import com.google.protobuf.util.JsonFormat;
 import com.tingyu.venus.exception.ResultException;
 import com.tingyu.venus.netty.MessageHandlerExecutionChain;
 import com.tingyu.venus.netty.protobuf.TransportMessageOuterClass;
@@ -64,8 +63,8 @@ public class DispatcherWebSocketProcessor {
     }
 
 
-
     private void initMessageHandlerAdapters(ApplicationContext context) {
+        //清除原来的适配器集合
         this.messageHandlerAdapters = null;
         String[] beanNames = context.getBeanNamesForType(MessageHandlerAdapter.class);
         if (beanNames.length > 0) {
@@ -86,24 +85,18 @@ public class DispatcherWebSocketProcessor {
         //通过传入的参数构建TransportMessage对象
 
 
-        TransportMessageOuterClass.TransportMessage.Builder builder = TransportMessageOuterClass.TransportMessage.newBuilder();
         //将传入文本转换为JSON对象
-        TransportMessageOuterClass.MessageType messageType=null;
+        TransportMessageOuterClass.MessageType messageType = null;
         try {
             JSONObject jsonObject = JSONObject.parseObject(text);
             messageType = jsonObject.getObject("messageType", TransportMessageOuterClass.MessageType.class);
-            log.debug(messageType.toString());
-
-            //获取文本的JSON格式文本
-            String jsonString = jsonObject.toJSONString();
-            JsonFormat.parser().merge(jsonString, builder);
         } catch (Exception e) {
-            e.printStackTrace();
-
+            log.error("websocket 参数异常：{}", e.getMessage());
         }
         //如果messageType为null,默认交给文本消息处理器执行
-        handler = executionChain.getHandler().getHandler(messageType);
+        handler = executionChain.getHandler().getHandler(messageType);//TODO 如果messageType 没有对应的处理器，会导致 StackOverFlowError
         return handler;
+
 
     }
 

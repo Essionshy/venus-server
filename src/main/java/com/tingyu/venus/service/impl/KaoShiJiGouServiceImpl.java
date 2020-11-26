@@ -1,7 +1,7 @@
 package com.tingyu.venus.service.impl;
 
 import com.alibaba.excel.EasyExcel;
-import com.tingyu.venus.dao.KaoShiJiGouDao;
+import com.tingyu.venus.dao.KaoShiJiGouRepository;
 import com.tingyu.venus.entity.KaoShiJiGouEntity;
 import com.tingyu.venus.excel.KaoShiJiGouData;
 import com.tingyu.venus.exception.ResultException;
@@ -28,14 +28,14 @@ public class KaoShiJiGouServiceImpl implements KaoShiJiGouService {
 
 
     @Autowired
-    private KaoShiJiGouDao kaoShiJiGouDao;
+    private KaoShiJiGouRepository kaoShiJiGouRepository;
 
     @Autowired
     private KaoShiJiGouExcelListener kaoShiJiGouExcelListener;
 
     @Override
     public void save(KaoShiJiGouEntity entity) {
-        kaoShiJiGouDao.save(entity);
+        kaoShiJiGouRepository.save(entity);
 
     }
 
@@ -62,7 +62,7 @@ public class KaoShiJiGouServiceImpl implements KaoShiJiGouService {
     @Override
     public boolean remove() {
         try {
-            kaoShiJiGouDao.deleteAllInBatch();
+            kaoShiJiGouRepository.deleteAllInBatch();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -78,7 +78,7 @@ public class KaoShiJiGouServiceImpl implements KaoShiJiGouService {
        // entity.setArea(areaName);
         Example<KaoShiJiGouEntity> example = Example.of(entity);
 
-        List<KaoShiJiGouEntity> outletsEntityList = kaoShiJiGouDao.findAll(example);
+        List<KaoShiJiGouEntity> outletsEntityList = kaoShiJiGouRepository.findAll(example);
 
         List<KaoShiJiGouVo> list = outletsEntityList.stream().map(entity1 -> {
             KaoShiJiGouVo kaoShiJiGouVo = new KaoShiJiGouVo();

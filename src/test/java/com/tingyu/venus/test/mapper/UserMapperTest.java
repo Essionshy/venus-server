@@ -1,7 +1,7 @@
 package com.tingyu.venus.test.mapper;
 
 import com.tingyu.venus.VenusServerApplication;
-import com.tingyu.venus.dao.UserDao;
+import com.tingyu.venus.dao.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,7 +19,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 public class UserMapperTest {
 
     @Autowired
-    UserDao userMapper;
+    UserRepository userMapper;
 
     @Test
     void testInsert(){
